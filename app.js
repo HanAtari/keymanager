@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 
@@ -10,6 +11,10 @@ var pidr = require('./server/routes/nikita');
 
 var app = express();
 
+app.use(bodyParser.json({
+    parameterLimit: 204800,
+    limit: '20mb',
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

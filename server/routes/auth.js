@@ -1,10 +1,9 @@
 const express = require('express');
-const user = require('../controllers/user.controller');
+const user = require('../controllers/auth.controller');
 var router = express.Router();
 
 /* GET users listing. */
 router.route('/')
-    .get(user.userCreate)
     .post(user.userCreate)
 
 
