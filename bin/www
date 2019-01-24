@@ -7,6 +7,16 @@
 var app = require('../app');
 var debug = require('debug')('untitled:server');
 var http = require('http');
+var io = require('socket.io')(http);
+
+
+io.on('connection', function(socket){
+
+  socket.on('update', async message => {
+    socket.emit('update', { text: text });
+  });
+  console.log('a user connected');
+});
 
 /**
  * Get port from environment and store in Express.
