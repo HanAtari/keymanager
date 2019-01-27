@@ -1,0 +1,17 @@
+const User = require('../models/user.model');
+
+const randomInteger = (min, max) => {
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
+    return rand;
+};
+
+const userLogin = (req, res, next) => {
+    User.findOne({
+        login: req.body.login
+    }).exec(function(err, books) {
+
+    });
+}
+
+module.exports.userLogin = userLogin;

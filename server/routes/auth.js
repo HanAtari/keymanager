@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.route('/')
-    .post(user.userCreate)
+    .post(user.userLogin)
 
 
 module.exports = router;

@@ -1,5 +1,12 @@
 const User = require('../models/user.model');
-const userCreate = (req, res, next) => {
+
+const randomInteger = (min, max) => {
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
+    return rand;
+};
+
+const userLogin = (req, res, next) => {
     User.findOne({
         login: req.body.login
     }).exec(function(err, books) {
@@ -11,9 +18,15 @@ const userCreate = (req, res, next) => {
                     password: req.body.password,
                 }).exec((err, user) => {
                     if (user !== null) {
-                        res.json({
-                            status: true,
-                            data: user
+                        const code = randomInteger(1000000, 9999999);
+                        User.updateOne({
+                            login: req.body.login,
+                            password: req.body.password,
+                        }, {inviteId: `${code}`}).exec((err, user) => {
+                            res.json({
+                                status: true,
+                                data: { code: code }
+                            })
                         })
                     } else {
                         res.json({
@@ -38,4 +51,4 @@ const userCreate = (req, res, next) => {
         });
 }
 
-module.exports.userCreate = userCreate;
+module.exports.userLogin = userLogin;
