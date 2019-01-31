@@ -6,49 +6,48 @@ const randomInteger = (min, max) => {
     return rand;
 };
 
-const userLogin = (req, res, next) => {
-    User.findOne({
-        login: req.body.login
-    }).exec(function(err, books) {
-            if (err) throw err;
+const userLogin = async (req, res, next) => {
+    try {
+        const books = await User.findOne({
+            login: req.body.login
+        })
+        if (books !== null) {
+            const user = await User.findOne({
+                login: req.body.login,
+                password: req.body.password,
+            })
 
-            if (books !== null) {
-                User.findOne({
+            if (user !== null) {
+                const code = randomInteger(1000000, 9999999);
+                await User.updateOne({
                     login: req.body.login,
                     password: req.body.password,
-                }).exec((err, user) => {
-                    if (user !== null) {
-                        const code = randomInteger(1000000, 9999999);
-                        User.updateOne({
-                            login: req.body.login,
-                            password: req.body.password,
-                        }, {inviteId: `${code}`}).exec((err, user) => {
-                            res.json({
-                                status: true,
-                                data: { code: code }
-                            })
-                        })
-                    } else {
-                        res.json({
-                            status: false,
-                            data: null,
-                            error: {
-                                description: 'неверный пароль'
-                            }
-                        })
-                    }
+                }, {inviteId: `${code}`})
+                res.json({
+                    status: true,
+                    data: {code: code}
                 })
-            }  else {
+            } else {
                 res.json({
                     status: false,
                     data: null,
                     error: {
-                        description: 'пользователь не найден'
+                        description: 'неверный пароль'
                     }
                 })
             }
+        } else {
+            res.json({
+                status: false,
+                data: null,
+                error: {
+                    description: 'пользователь не найден'
+                }
+            })
+        }
+    } catch (e) {
 
-        });
+    }
 }
 
 module.exports.userLogin = userLogin;

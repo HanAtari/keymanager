@@ -6,12 +6,12 @@ const randomInteger = (min, max) => {
     return rand;
 };
 
-const userLogin = (req, res, next) => {
-    User.findOne({
-        login: req.body.login
-    }).exec(function(err, books) {
-
+const findUser = async (inviteId) => {
+    const user = await User.findOne({
+        inviteId
     });
-}
 
-module.exports.userLogin = userLogin;
+    return Boolean(user);
+};
+
+module.exports.findUser = findUser;
