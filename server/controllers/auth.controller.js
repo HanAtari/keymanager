@@ -25,7 +25,7 @@ const userLogin = async (req, res, next) => {
                 }, {inviteId: `${code}`})
                 res.json({
                     status: true,
-                    data: {code: code}
+                    data: {inviteId: `${code}`}
                 })
             } else {
                 res.json({
