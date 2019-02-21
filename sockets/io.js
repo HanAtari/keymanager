@@ -6,6 +6,7 @@ module.exports = server => {
     io.on('connection', (socket) => {
         socket.on('update', (message, callback) => {
             // io.sockets.emit('update', { inviteId: 'dfdf' });
+            // io.sockets.emit('update', { inviteId: 'dfdf' });
             console.log('update success', message);
             console.log('update success', message);
         });
