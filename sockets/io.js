@@ -7,6 +7,7 @@ module.exports = server => {
         socket.on('update', (message, callback) => {
             // io.sockets.emit('update', { inviteId: 'dfdf' });
             console.log('update success', message);
+            console.log('update success', message);
         });
 
         socket.on('find', async (message, callback) => {
